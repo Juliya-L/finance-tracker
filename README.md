@@ -37,6 +37,12 @@ This project is being developed as a backend pet project for learning and practi
 - Income vs expenses
 - Financial statistics
 
+## Budget Planning
+- Create monthly budgets
+- Set spending limits by category
+- Track budget progress
+- Compare expenses against planned budget
+
 ## API Documentation
 - Swagger UI documentation
 - OpenAPI schema generation
