@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Finance Tracker{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { darkMode: "class" };
+    </script>
+
+    <!-- Tabler icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        background: #0a0a0f;
+        color: #fff;
+        font-family: system-ui, sans-serif;
+      }
+      .bg-grid {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background-image:
+          linear-gradient(rgba(99, 91, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(99, 91, 255, 0.05) 1px, transparent 1px);
+        background-size: 32px 32px;
+      }
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+      }
+      /* Nav active */
+      .nav-active {
+        background: rgba(83, 74, 183, 0.2) !important;
+        color: #afa9ec !important;
+      }
+      /* Progress bar */
+      .progress-bg {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        border-radius: 2px;
+        transition: width 0.4s;
+      }
+      /* Toast */
+      #toast {
+        transition: all 0.3s;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="bg-grid"></div>
+
+    {% block auth_page %}{% endblock %} {% block main_layout %}
+    <div class="flex h-screen overflow-hidden relative z-10">
+      <!-- ===== SIDEBAR ===== -->
+      <aside
+        style="
+          width: 220px;
+          background: rgba(255, 255, 255, 0.02);
+          border-right: 0.5px solid rgba(255, 255, 255, 0.06);
+        "
+        class="flex flex-col flex-shrink-0"
+      >
+        <!-- Brand -->
+        <div
+          style="border-bottom: 0.5px solid rgba(255, 255, 255, 0.06)"
+          class="p-5"
+        >
+          <div class="flex items-center gap-2">
+            <div
+              style="
+                width: 32px;
+                height: 32px;
+                background: #534ab7;
+                border-radius: 8px;
+              "
+              class="flex items-center justify-center"
+            >
+              <i
+                class="ti ti-chart-pie text-purple-200"
+                style="font-size: 16px"
+              ></i>
+            </div>
+            <span
+              style="
+                font-size: 14px;
+                font-weight: 500;
+                color: rgba(255, 255, 255, 0.9);
+              "
+              >Finance Tracker</span
+            >
+          </div>
+        </div>
+
+        <!-- Nav -->
+        <nav class="flex-1 p-3 flex flex-col gap-0.5">
+          <a
+            href="/"
+            id="nav-dashboard"
+            style="
+              border-radius: 8px;
+              font-size: 13px;
+              color: rgba(255, 255, 255, 0.4);
+            "
+            class="flex items-center gap-2.5 px-3 py-2 hover:bg-white/5 transition-colors"
+          >
+            <i class="ti ti-layout-dashboard" style="font-size: 16px"></i>
+            Dashboard
+          </a>
+          <a
+            href="/transactions/"
+            id="nav-transactions"
+            style="
+              border-radius: 8px;
+              font-size: 13px;
+              color: rgba(255, 255, 255, 0.4);
+            "
+            class="flex items-center gap-2.5 px-3 py-2 hover:bg-white/5 transition-colors"
+          >
+            <i class="ti ti-arrows-exchange" style="font-size: 16px"></i>
+            Transactions
+          </a>
+          <a
+            href="/categories/"
+            id="nav-categories"
+            style="
+              border-radius: 8px;
+              font-size: 13px;
+              color: rgba(255, 255, 255, 0.4);
+            "
+            class="flex items-center gap-2.5 px-3 py-2 hover:bg-white/5 transition-colors"
+          >
+            <i class="ti ti-tag" style="font-size: 16px"></i> Categories
+          </a>
+          <a
+            href="/analytics/"
+            id="nav-analytics"
+            style="
+              border-radius: 8px;
+              font-size: 13px;
+              color: rgba(255, 255, 255, 0.4);
+            "
+            class="flex items-center gap-2.5 px-3 py-2 hover:bg-white/5 transition-colors"
+          >
+            <i class="ti ti-chart-bar" style="font-size: 16px"></i> Analytics
+          </a>
+          <a
+            href="/budgets/"
+            id="nav-budgets"
+            style="
+              border-radius: 8px;
+              font-size: 13px;
+              color: rgba(255, 255, 255, 0.4);
+            "
+            class="flex items-center gap-2.5 px-3 py-2 hover:bg-white/5 transition-colors"
+          >
+            <i class="ti ti-target" style="font-size: 16px"></i> Budgets
+          </a>
+        </nav>
+
+        <!-- User -->
+        <div
+          style="border-top: 0.5px solid rgba(255, 255, 255, 0.06)"
+          class="p-3"
+        >
+          <div class="flex items-center gap-2.5 px-3 py-2">
+            <div
+              id="user-avatar"
+              style="
+                width: 28px;
+                height: 28px;
+                background: #534ab7;
+                border-radius: 50%;
+                font-size: 11px;
+                font-weight: 500;
+                color: #cecbf6;
+                flex-shrink: 0;
+              "
+              class="flex items-center justify-center"
+            >
+              ?
+            </div>
+            <div style="overflow: hidden">
+              <div
+                id="user-email"
+                style="
+                  font-size: 11px;
+                  color: rgba(255, 255, 255, 0.35);
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                "
+              ></div>
+            </div>
+          </div>
+         
+          <button
+            onclick="logout()"
+            style="
+              width: 100%;
+              border-radius: 8px;
+              font-size: 12px;
+              color: rgba(255, 255, 255, 0.3);
+              border: 0.5px solid rgba(255, 255, 255, 0.08);
+            "
+            class="flex items-center gap-2 px-3 py-1.5 hover:bg-white/5 transition-colors mt-1"
+          >
+            <i class="ti ti-logout" style="font-size: 14px"></i> Sign out
+          </button>
+        </div>
+      </aside>
+
+      <!-- ===== MAIN CONTENT ===== -->
+      <main class="flex-1 overflow-y-auto">
+        <div class="p-8">{% block content %}{% endblock %}</div>
+      </main>
+    </div>
+    {% endblock %}
+
+    <!-- Toast -->
+    <div
+      id="toast"
+      style="
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 9999;
+        padding: 12px 18px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 500;
+        display: none;
+        align-items: center;
+        gap: 8px;
+      "
+    ></div>
+
+    <!-- ===== GLOBAL JS ===== -->
+    <script>
+      const API = "http://127.0.0.1:8000";
+
+      // ---- Tokens ----
+      const getAccess = () => localStorage.getItem("access_token");
+      const getRefresh = () => localStorage.getItem("refresh_token");
+
+      // ---- Auth guard ----
+      function requireAuth() {
+        if (!getAccess()) window.location.href = "/login/";
+      }
+
+      // ---- API fetch з авто-refresh ----
+      async function apiFetch(url, options = {}) {
+        const headers = {
+          "Content-Type": "application/json",
+          ...options.headers,
+        };
+        if (getAccess()) headers["Authorization"] = `Bearer ${getAccess()}`;
+
+        let res = await fetch(API + url, { ...options, headers });
+
+        if (res.status === 401) {
+          const ok = await tryRefresh();
+          if (ok) {
+            headers["Authorization"] = `Bearer ${getAccess()}`;
+            res = await fetch(API + url, { ...options, headers });
+          } else {
+            window.location.href = "/login/";
+            return null;
+          }
+        }
+        return res;
+      }
+
+      async function tryRefresh() {
+        const refresh = getRefresh();
+        if (!refresh) return false;
+        try {
+          const res = await fetch(`${API}/api/auth/token/refresh/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ refresh }),
+          });
+          if (res.ok) {
+            const data = await res.json();
+            localStorage.setItem("access_token", data.access);
+            return true;
+          }
+        } catch {}
+        return false;
+      }
+
+      async function logout() {
+        try {
+          await apiFetch("/api/auth/logout/", {
+            method: "POST",
+            body: JSON.stringify({ refresh: getRefresh() }),
+          });
+        } finally {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          window.location.href = "/login/";
+        }
+      }
+
+      // ---- Toast ----
+      function showToast(msg, type = "success") {
+        const t = document.getElementById("toast");
+        const isSuccess = type === "success";
+        t.style.background = isSuccess
+          ? "rgba(29,158,117,0.9)"
+          : "rgba(226,75,74,0.9)";
+        t.innerHTML = `<i class="ti ti-${isSuccess ? "check" : "x"}" style="font-size:15px"></i> ${msg}`;
+        t.style.display = "flex";
+        setTimeout(() => (t.style.display = "none"), 3000);
+      }
+
+      // ---- Highlight active nav ----
+      function setActiveNav() {
+        const path = window.location.pathname;
+        const map = {
+          "/": "nav-dashboard",
+          "/transactions/": "nav-transactions",
+          "/categories/": "nav-categories",
+          "/analytics/": "nav-analytics",
+          "/budgets/": "nav-budgets",
+        };
+        const id = map[path];
+        if (id) {
+          const el = document.getElementById(id);
+          if (el) {
+            el.style.background = "rgba(83,74,183,0.2)";
+            el.style.color = "#AFA9EC";
+          }
+        }
+      }
+
+      // ---- Load user info ----
+      async function loadUser() {
+        if (!getAccess()) return;
+        try {
+          const res = await apiFetch("/api/auth/me/");
+          if (!res) return;
+          const data = await res.json();
+          const emailEl = document.getElementById("user-email");
+          const avatarEl = document.getElementById("user-avatar");
+          if (emailEl) emailEl.textContent = data.email;
+          if (avatarEl) avatarEl.textContent = data.email[0].toUpperCase();
+        } catch {}
+      }
+
+      // ---- Format currency ----
+      function formatMoney(amount) {
+        return (
+          "₴" +
+          Number(amount).toLocaleString("uk-UA", { minimumFractionDigits: 0 })
+        );
+      }
+
+      // ---- Format date ----
+      function formatDate(dateStr) {
+        return new Date(dateStr).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+      }
+   document.addEventListener("DOMContentLoaded", () => {
+        setActiveNav();
+        loadUser();
+      });
+   
+    </script>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

@@ -5,8 +5,9 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from drf_spectacular.utils import extend_schema
 from django.contrib.auth import get_user_model
-
 from .serializers import RegisterSerializer, UserSerializer, ChangePasswordSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import EmailTokenObtainPairSerializer
 
 User = get_user_model()
 
@@ -71,7 +72,8 @@ class ChangePasswordView(APIView):
         return Response({'detail': 'Password changed'})
     
 
-
+class EmailTokenObtainPairView(TokenObtainPairView):
+    serializer_class = EmailTokenObtainPairSerializer
                                                                
 
         

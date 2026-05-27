@@ -1,0 +1,290 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Budgets — Finance Tracker{% endblock %}
+
+{% block content %}
+
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem">
+  <div>
+    <h1 style="font-size:22px;font-weight:500;color:#fff;letter-spacing:-0.02em">Budgets</h1>
+    <p style="font-size:13px;color:rgba(255,255,255,0.35);margin-top:3px">Set monthly spending limits</p>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:6px 14px">
+      <i class="ti ti-calendar" style="font-size:14px;color:rgba(255,255,255,0.5)"></i>
+      <input id="month-input" type="month"
+             style="background:transparent;border:none;color:rgba(255,255,255,0.7);font-size:13px;outline:none;cursor:pointer"
+             onchange="loadBudgets()"/>
+    </div>
+    <button onclick="openModal()"
+            style="display:flex;align-items:center;gap:8px;padding:9px 18px;background:#534AB7;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer"
+            onmouseover="this.style.background='#3C3489'"
+            onmouseout="this.style.background='#534AB7'">
+      <i class="ti ti-plus" style="font-size:15px"></i> Add budget
+    </button>
+  </div>
+</div>
+
+<!-- Summary row -->
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem">
+  <div style="background:rgba(83,74,183,0.15);border:0.5px solid rgba(127,119,221,0.3);border-radius:10px;padding:1rem">
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px;display:flex;align-items:center;gap:5px">
+      <i class="ti ti-target"></i> Total budgeted
+    </div>
+    <div id="total-limit" style="font-size:22px;font-weight:500;color:#fff">—</div>
+  </div>
+  <div style="background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem">
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px;display:flex;align-items:center;gap:5px">
+      <i class="ti ti-arrow-up-circle"></i> Total spent
+    </div>
+    <div id="total-spent" style="font-size:22px;font-weight:500;color:#F09595">—</div>
+  </div>
+  <div style="background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem">
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px;display:flex;align-items:center;gap:5px">
+      <i class="ti ti-pig-money"></i> Remaining
+    </div>
+    <div id="total-remaining" style="font-size:22px;font-weight:500;color:#5DCAA5">—</div>
+  </div>
+</div>
+
+<!-- Budgets grid -->
+<div id="budgets-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px">
+  <div style="font-size:13px;color:rgba(255,255,255,0.25);padding:2rem">Loading...</div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center">
+  <div style="background:#13131a;border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:2rem;width:100%;max-width:420px">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+      <h2 id="modal-title" style="font-size:17px;font-weight:500;color:#fff">Add budget</h2>
+      <button onclick="closeModal()" style="background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:20px">×</button>
+    </div>
+
+    <div style="margin-bottom:14px">
+      <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase">Category</label>
+      <select id="m-category"
+              style="width:100%;padding:10px 14px;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none">
+        <option value="">Select category</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom:14px">
+      <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase">Monthly limit</label>
+      <input id="m-limit" type="number" step="0.01" placeholder="0.00"
+             style="width:100%;padding:10px 14px;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none"/>
+    </div>
+
+    <div style="margin-bottom:1.5rem">
+      <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase">Month</label>
+      <input id="m-month" type="month"
+             style="width:100%;padding:10px 14px;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none"/>
+    </div>
+
+    <div id="modal-error" style="display:none;background:rgba(226,75,74,0.15);border:0.5px solid rgba(226,75,74,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#F09595;margin-bottom:14px"></div>
+
+    <div style="display:flex;gap:8px">
+      <button onclick="closeModal()"
+              style="flex:1;padding:11px;background:transparent;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer">
+        Cancel
+      </button>
+      <button onclick="saveBudget()"
+              style="flex:2;padding:11px;background:#534AB7;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer"
+              onmouseover="this.style.background='#3C3489'"
+              onmouseout="this.style.background='#534AB7'">
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  requireAuth()
+
+  let editingId  = null
+  let categories = []
+
+  // Поточний місяць
+  const now = new Date()
+  document.getElementById('month-input').value =
+    `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`
+
+  function getMonth() {
+    return document.getElementById('month-input').value
+  }
+
+  // ---- Load categories ----
+ async function loadCategories() {
+    const res = await apiFetch('/api/categories/')
+    if (!res) return
+    const data = await res.json()
+    const cats = Array.isArray(data) ? data : (data.results || [])
+    const sel = document.getElementById('m-category')
+    cats.forEach(c => {
+      sel.innerHTML += `<option value="${c.id}">${c.icon || '📌'} ${c.name}</option>`
+    })
+}
+
+  // ---- Load budgets ----
+async function loadBudgets() {
+    const month = getMonth()
+    const res = await apiFetch(`/api/budgets/?month=${month}`)
+    if (!res) return
+    const raw = await res.json()
+  
+    const data = Array.isArray(raw) ? raw : (raw.results || [])
+
+    // Summary
+    const totalLimit     = data.reduce((s, b) => s + parseFloat(b.limit_amount), 0)
+    const totalSpent     = data.reduce((s, b) => s + parseFloat(b.spent), 0)
+    const totalRemaining = totalLimit - totalSpent
+
+    document.getElementById('total-limit').textContent     = formatMoney(totalLimit)
+    document.getElementById('total-spent').textContent     = formatMoney(totalSpent)
+    document.getElementById('total-remaining').textContent = formatMoney(totalRemaining)
+    document.getElementById('total-remaining').style.color = totalRemaining >= 0 ? '#5DCAA5' : '#F09595'
+
+    const el = document.getElementById('budgets-grid')
+
+    if (!data.length) {
+      el.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:3rem;font-size:13px;color:rgba(255,255,255,0.25)">
+          No budgets for this month.<br>
+          <button onclick="openModal()" style="background:none;border:none;color:#7F77DD;cursor:pointer;font-size:13px;margin-top:8px">
+            Create your first budget →
+          </button>
+        </div>`
+      return
+    }
+
+    el.innerHTML = data.map(b => {
+      const pct   = Math.min(b.percent_used, 100)
+      const over  = b.percent_used > 100
+      const color = over ? '#E24B4A' : pct >= 90 ? '#E24B4A' : pct >= 70 ? '#F5A623' : '#534AB7'
+      const statusColor = over ? '#F09595' : pct >= 90 ? '#F09595' : pct >= 70 ? '#F5C775' : '#5DCAA5'
+      const statusText  = over ? '🔴 Over budget!' : pct >= 90 ? '⚠️ Almost over' : pct >= 70 ? '👀 Watch out' : '✅ On track'
+
+      return `
+        <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:1.25rem"
+             onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'"
+             onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:38px;height:38px;border-radius:10px;background:${b.category_detail?.color || '#534AB7'}22;display:flex;align-items:center;justify-content:center;font-size:18px">
+                ${b.category_detail?.icon || '📌'}
+              </div>
+              <div>
+                <div style="font-size:14px;font-weight:500;color:rgba(255,255,255,0.85)">${b.category_detail?.name || 'Uncategorized'}</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:1px">${statusText}</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:5px">
+              <button onclick="editBudget(${JSON.stringify(b).replace(/"/g,'&quot;')})"
+                      style="padding:5px 8px;background:rgba(255,255,255,0.06);border:none;border-radius:6px;color:rgba(255,255,255,0.5);cursor:pointer;font-size:12px">
+                <i class="ti ti-pencil"></i>
+              </button>
+              <button onclick="deleteBudget(${b.id})"
+                      style="padding:5px 8px;background:rgba(226,75,74,0.1);border:none;border-radius:6px;color:#F09595;cursor:pointer;font-size:12px">
+                <i class="ti ti-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:500;color:#F09595">-${formatMoney(b.spent)}</span>
+            <span style="font-size:12px;color:rgba(255,255,255,0.4)">of ${formatMoney(b.limit_amount)}</span>
+          </div>
+
+          <div class="progress-bg">
+            <div class="progress-fill" style="width:${pct}%;background:${color}"></div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;margin-top:6px">
+            <span style="font-size:11px;color:${statusColor}">${b.percent_used}% used</span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.3)">${formatMoney(b.remaining)} left</span>
+          </div>
+        </div>`
+    }).join('')
+  }
+
+  // ---- Modal ----
+  function openModal() {
+    editingId = null
+    document.getElementById('modal-title').textContent = 'Add budget'
+    document.getElementById('m-category').value = ''
+    document.getElementById('m-limit').value    = ''
+    document.getElementById('m-month').value    = getMonth()
+    document.getElementById('modal-error').style.display = 'none'
+    document.getElementById('modal').style.display = 'flex'
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none'
+  }
+
+  function editBudget(b) {
+    editingId = b.id
+    document.getElementById('modal-title').textContent  = 'Edit budget'
+    document.getElementById('m-category').value = b.category
+    document.getElementById('m-limit').value    = b.limit_amount
+    document.getElementById('m-month').value    = b.month.slice(0, 7)
+    document.getElementById('modal-error').style.display = 'none'
+    document.getElementById('modal').style.display = 'flex'
+  }
+
+  async function saveBudget() {
+    const category = document.getElementById('m-category').value
+    const limit    = document.getElementById('m-limit').value
+    const month    = document.getElementById('m-month').value
+    const errorEl  = document.getElementById('modal-error')
+
+    if (!category || !limit || !month) {
+      errorEl.textContent = 'All fields are required'
+      errorEl.style.display = 'block'
+      return
+    }
+
+    const body = {
+      category,
+      limit_amount: limit,
+      month: month + '-01',
+    }
+
+    const url    = editingId ? `/api/budgets/${editingId}/` : '/api/budgets/'
+    const method = editingId ? 'PATCH' : 'POST'
+
+    const res = await apiFetch(url, { method, body: JSON.stringify(body) })
+    if (!res) return
+
+    if (res.ok) {
+      closeModal()
+      loadBudgets()
+      showToast(editingId ? 'Budget updated' : 'Budget created')
+    } else {
+      const data = await res.json()
+      errorEl.textContent = data.non_field_errors?.[0] || data.limit_amount?.[0] || 'Something went wrong'
+      errorEl.style.display = 'block'
+    }
+  }
+
+  async function deleteBudget(id) {
+    if (!confirm('Delete this budget?')) return
+    const res = await apiFetch(`/api/budgets/${id}/`, { method: 'DELETE' })
+    if (res && res.ok) {
+      loadBudgets()
+      showToast('Budget deleted')
+    }
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal()
+  })
+
+  loadCategories()
+  loadBudgets()
+</script>
+{% endblock %}
