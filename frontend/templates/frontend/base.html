@@ -273,45 +273,53 @@
       }
 
       // ---- API fetch з авто-refresh ----
-      async function apiFetch(url, options = {}) {
-        const headers = {
-          "Content-Type": "application/json",
-          ...options.headers,
-        };
-        if (getAccess()) headers["Authorization"] = `Bearer ${getAccess()}`;
+     async function apiFetch(url, options = {}) {
+  const headers = { 'Content-Type': 'application/json', ...options.headers }
+  if (getAccess()) headers['Authorization'] = `Bearer ${getAccess()}`
 
-        let res = await fetch(API + url, { ...options, headers });
+  let res = await fetch(API + url, { ...options, headers })
 
-        if (res.status === 401) {
-          const ok = await tryRefresh();
-          if (ok) {
-            headers["Authorization"] = `Bearer ${getAccess()}`;
-            res = await fetch(API + url, { ...options, headers });
-          } else {
-            window.location.href = "/login/";
-            return null;
-          }
-        }
-        return res;
+  if (res.status === 401 && !options._retry) {
+    const ok = await tryRefresh()
+    if (ok) {
+      headers['Authorization'] = `Bearer ${getAccess()}`
+      res = await fetch(API + url, { ...options, headers, _retry: true })
+    } else {
+      if (window.location.pathname !== '/login/') {
+        window.location.href = '/login/'
       }
-
+      return null
+    }
+  }
+  return res
+}
       async function tryRefresh() {
-        const refresh = getRefresh();
-        if (!refresh) return false;
-        try {
-          const res = await fetch(`${API}/api/auth/token/refresh/`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ refresh }),
-          });
-          if (res.ok) {
-            const data = await res.json();
-            localStorage.setItem("access_token", data.access);
-            return true;
-          }
-        } catch {}
-        return false;
-      }
+  const refresh = getRefresh()
+  if (!refresh) {
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    return false
+  }
+  try {
+    const res = await fetch(`${API}/api/auth/token/refresh/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh }),
+    })
+    if (res.ok) {
+      const data = await res.json()
+      localStorage.setItem('access_token', data.access)
+      return true
+    } else {
+      // Refresh протух — чистимо токени
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
+      return false
+    }
+  } catch {
+    return false
+  }
+}
 
       async function logout() {
         try {
