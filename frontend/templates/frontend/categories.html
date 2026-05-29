@@ -47,11 +47,20 @@
       <button onclick="closeModal()" style="background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:20px">×</button>
     </div>
 
-    <div style="margin-bottom:14px">
-      <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase">Name</label>
-      <input id="m-name" type="text" placeholder="e.g. Food & Dining"
-             style="width:100%;padding:10px 14px;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none"/>
-    </div>
+  <div style="margin-bottom:14px">
+  <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:8px;letter-spacing:0.05em;text-transform:uppercase">
+    Icon
+  </label>
+
+  <div id="icon-picker"
+       style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+  </div>
+
+  <input id="m-icon"
+         type="text"
+         placeholder="or type any emoji..."
+         style="width:100%;padding:8px 14px;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;font-size:18px;outline:none"/>
+</div>
 
     <div style="margin-bottom:14px">
       <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase">Type</label>
@@ -103,9 +112,16 @@
   requireAuth()
 
   const COLORS = ['#534AB7','#1D9E75','#E24B4A','#F5A623','#3B82F6','#EC4899','#8B5CF6','#14B8A6','#F59E0B','#6366F1']
+  const ICONS = [
+  '🍕','🍔','🍜','🍺','☕','🛒','🚗','🚌','✈️','🏠',
+  '💊','🏥','🎮','🎬','🎵','📚','👗','👟','💄','🐶',
+  '💪','⚽','🧘','💰','💳','🎁','🏖️','🔧','📱','💡',
+  '🌿','🐱','🍷','🎂','🛋️','🧹','📦','🏫','👶','❤️'
+]
   let currentTab  = 'all'
   let currentType = 'expense'
   let selectedColor = COLORS[0]
+  let selectedIcon = '📌'
   let editingId = null
   let allCategories = []
 
@@ -123,6 +139,33 @@
     buildColorPicker()
   }
 
+  function buildIconPicker() {
+  const el = document.getElementById('icon-picker')
+
+  el.innerHTML = ICONS.map(icon => `
+    <div onclick="selectIcon('${icon}')"
+         style="
+            width:36px;
+            height:36px;
+            border-radius:8px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:18px;
+            cursor:pointer;
+            background:${icon === selectedIcon ? 'rgba(83,74,183,0.4)' : 'rgba(255,255,255,0.05)'};
+            border:0.5px solid ${icon === selectedIcon ? '#7F77DD' : 'rgba(255,255,255,0.08)'};
+         ">
+      ${icon}
+    </div>
+  `).join('')
+}
+
+function selectIcon(icon) {
+  selectedIcon = icon
+  document.getElementById('m-icon').value = icon
+  buildIconPicker()
+}
   // ---- Tabs ----
   function setTab(tab) {
     currentTab = tab
@@ -196,16 +239,22 @@
 
   // ---- Modal ----
   function openModal() {
-    editingId = null
-    document.getElementById('modal-title').textContent = 'Add category'
-    document.getElementById('m-name').value = ''
-    document.getElementById('m-icon').value = ''
-    document.getElementById('modal-error').style.display = 'none'
-    selectedColor = COLORS[0]
-    buildColorPicker()
-    setType('expense')
-    document.getElementById('modal').style.display = 'flex'
-  }
+  editingId = null
+
+  document.getElementById('modal-title').textContent = 'Add category'
+  document.getElementById('m-name').value = ''
+  document.getElementById('m-icon').value = ''
+  document.getElementById('modal-error').style.display = 'none'
+
+  selectedColor = COLORS[0]
+  selectedIcon = '📌'
+
+  buildColorPicker()
+  buildIconPicker()
+
+  setType('expense')
+  document.getElementById('modal').style.display = 'flex'
+}
 
   function closeModal() {
     document.getElementById('modal').style.display = 'none'
@@ -225,16 +274,24 @@
   }
 
   function editCategory(c) {
-    editingId = c.id
-    document.getElementById('modal-title').textContent = 'Edit category'
-    document.getElementById('m-name').value = c.name
-    document.getElementById('m-icon').value = c.icon
-    document.getElementById('modal-error').style.display = 'none'
-    selectedColor = c.color
-    buildColorPicker()
-    setType(c.type)
-    document.getElementById('modal').style.display = 'flex'
-  }
+  editingId = c.id
+
+  document.getElementById('modal-title').textContent = 'Edit category'
+  document.getElementById('m-name').value = c.name
+  document.getElementById('m-icon').value = c.icon || ''
+
+  document.getElementById('modal-error').style.display = 'none'
+
+  selectedColor = c.color
+  selectedIcon = c.icon || '📌'
+
+  buildColorPicker()
+  buildIconPicker()
+
+  setType(c.type)
+
+  document.getElementById('modal').style.display = 'flex'
+}
 
   async function saveCategory() {
     const name = document.getElementById('m-name').value.trim()
@@ -279,6 +336,7 @@
   })
 
   buildColorPicker()
+  buildIconPicker()
   loadCategories()
 </script>
 {% endblock %}
