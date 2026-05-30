@@ -12,18 +12,14 @@
     <p id="greeting" style="font-size:13px;color:rgba(255,255,255,0.35);margin-top:3px"></p>
   </div>
 
-  <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:6px 14px;">
-    <i class="ti ti-calendar" style="font-size:14px;color:rgba(255,255,255,0.5)"></i>
-
-    <input
-      id="month-input"
-      type="month"
-      style="background:transparent;border:none;color:rgba(255,255,255,0.7);font-size:13px;outline:none;cursor:pointer"
-      onchange="loadDashboard()"
-    />
-
-    <i class="ti ti-chevron-down" style="font-size:12px;color:rgba(255,255,255,0.3)"></i>
-  </div>
+  <div style="position:relative;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:6px 14px;cursor:pointer"
+     onclick="document.getElementById('month-input').showPicker()">
+  <i class="ti ti-calendar" style="font-size:14px;color:rgba(255,255,255,0.5);pointer-events:none"></i>
+  <span id="month-label" style="font-size:13px;color:rgba(255,255,255,0.7);pointer-events:none"></span>
+  <i class="ti ti-chevron-down" style="font-size:12px;color:rgba(255,255,255,0.3);pointer-events:none"></i>
+  <input id="month-input" type="month"
+         style="position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;top:0;left:0"
+         onchange="currentYear=new Date(this.value+'-01').getFullYear();currentMonth=new Date(this.value+'-01').getMonth()+1;document.getElementById('month-label').textContent=getMonthLabel();loadDashboard()"/>
 </div>
 
 <!-- Stat cards -->
@@ -131,30 +127,34 @@
     return input.value || getDefaultMonthStr();
   }
 
-  function setGreeting() {
-    const h = new Date().getHours();
-    const greet =
-      h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
-    document.getElementById("greeting").textContent = `${greet} 👋`;
-  }
-
-  async function loadDashboard() {
-    const monthInput = document.getElementById("month-input");
-
-    if (!monthInput.value) {
-      monthInput.value = getDefaultMonthStr();
+  async function setGreeting() {
+  const h = new Date().getHours()
+  const greet = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'
+  try {
+    const res = await apiFetch('/api/auth/me/')
+    if (res) {
+      const data = await res.json()
+      const name = data.username || data.email.split('@')[0]
+      document.getElementById('greeting').textContent = `${greet}, ${name} 👋`
     }
-
-    setGreeting();
-
-    await Promise.all([
-      loadBalance(),
-      loadSummary(),
-      loadTrend(),
-      loadBudgets(),
-      loadTransactions(),
-    ]);
+  } catch {
+    document.getElementById('greeting').textContent = `${greet} 👋`
   }
+}
+
+ async function loadDashboard() {
+  document.getElementById('month-label').textContent = getMonthLabel()
+  document.getElementById('month-input').value = getMonthStr()
+  setGreeting()
+
+  await Promise.all([
+    loadBalance(),
+    loadSummary(),
+    loadTrend(),
+    loadBudgets(),
+    loadTransactions(),
+  ])
+}
 
   async function loadBalance() {
     const res = await apiFetch("/api/analytics/balance/");
