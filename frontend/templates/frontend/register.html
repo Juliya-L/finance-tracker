@@ -1,199 +1,655 @@
-{% extends 'frontend/base.html' %}
-
-{% block title %}Sign up — Finance Tracker{% endblock %}
-
-{% block main_layout %}{% endblock %}
-
-{% block auth_page %}
-<div style="min-height:100vh;background:#0a0a0f;display:flex;position:relative;overflow:hidden">
+{% extends 'frontend/base.html' %} {% block title %}Sign up — Finance Tracker{%
+endblock %} {% block main_layout %}{% endblock %} {% block auth_page %}
+<div
+  style="
+    min-height: 100vh;
+    background: #0a0a0f;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  "
+>
   <div class="bg-grid"></div>
-  <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(83,74,183,0.18) 0%,transparent 70%);top:-120px;left:-80px;pointer-events:none"></div>
-  <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,0.12) 0%,transparent 70%);bottom:-60px;right:400px;pointer-events:none"></div>
+  <div
+    style="
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(83, 74, 183, 0.18) 0%,
+        transparent 70%
+      );
+      top: -120px;
+      left: -80px;
+      pointer-events: none;
+    "
+  ></div>
+  <div
+    style="
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(29, 158, 117, 0.12) 0%,
+        transparent 70%
+      );
+      bottom: -60px;
+      right: 400px;
+      pointer-events: none;
+    "
+  ></div>
 
   <!-- Left -->
-  <div style="flex:1;padding:3rem;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:1">
-    <div style="display:flex;align-items:center;gap:10px">
-      <div style="width:38px;height:38px;background:#534AB7;border-radius:10px;display:flex;align-items:center;justify-content:center">
-        <i class="ti ti-chart-pie" style="color:#CECBF6;font-size:18px"></i>
+  <div
+    style="
+      flex: 1;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    "
+  >
+    <div style="display: flex; align-items: center; gap: 10px">
+      <div
+        style="
+          width: 38px;
+          height: 38px;
+          background: #534ab7;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        <i class="ti ti-chart-pie" style="color: #cecbf6; font-size: 18px"></i>
       </div>
-      <span style="font-size:16px;font-weight:500;color:rgba(255,255,255,0.9)">Finance Tracker</span>
+      <span
+        style="
+          font-size: 16px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.9);
+        "
+        >Finance Tracker</span
+      >
     </div>
 
     <div>
-      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(83,74,183,0.2);border:0.5px solid rgba(175,169,236,0.3);border-radius:20px;padding:4px 12px;font-size:12px;color:#AFA9EC;margin-bottom:1.5rem">
-        <span style="width:6px;height:6px;background:#5DCAA5;border-radius:50%;display:inline-block"></span>
+      <div
+        style="
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: rgba(83, 74, 183, 0.2);
+          border: 0.5px solid rgba(175, 169, 236, 0.3);
+          border-radius: 20px;
+          padding: 4px 12px;
+          font-size: 12px;
+          color: #afa9ec;
+          margin-bottom: 1.5rem;
+        "
+      >
+        <span
+          style="
+            width: 6px;
+            height: 6px;
+            background: #5dcaa5;
+            border-radius: 50%;
+            display: inline-block;
+          "
+        ></span>
         Join for free
       </div>
-      <h1 style="font-size:42px;font-weight:500;color:#fff;line-height:1.2;letter-spacing:-0.03em;margin-bottom:1rem">
-        Start tracking<br><span style="color:#7F77DD">your finances</span>
+      <h1
+        style="
+          font-size: 42px;
+          font-weight: 500;
+          color: #fff;
+          line-height: 1.2;
+          letter-spacing: -0.03em;
+          margin-bottom: 1rem;
+        "
+      >
+        Start tracking<br /><span style="color: #7f77dd">your finances</span>
       </h1>
-      <p style="font-size:14px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:360px">
+      <p
+        style="
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.4);
+          line-height: 1.7;
+          max-width: 360px;
+        "
+      >
         Create your account in seconds and take control of your money today.
       </p>
 
-      <div style="display:flex;flex-direction:column;gap:12px;margin-top:2rem">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:36px;height:36px;background:rgba(83,74,183,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i class="ti ti-check" style="color:#AFA9EC;font-size:16px"></i>
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 2rem;
+        "
+      >
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div
+            style="
+              width: 36px;
+              height: 36px;
+              background: rgba(83, 74, 183, 0.2);
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+            "
+          >
+            <i class="ti ti-check" style="color: #afa9ec; font-size: 16px"></i>
           </div>
-          <span style="font-size:13px;color:rgba(255,255,255,0.5)">Track all your income and expenses</span>
+          <span style="font-size: 13px; color: rgba(255, 255, 255, 0.5)"
+            >Track all your income and expenses</span
+          >
         </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:36px;height:36px;background:rgba(83,74,183,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i class="ti ti-check" style="color:#AFA9EC;font-size:16px"></i>
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div
+            style="
+              width: 36px;
+              height: 36px;
+              background: rgba(83, 74, 183, 0.2);
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+            "
+          >
+            <i class="ti ti-check" style="color: #afa9ec; font-size: 16px"></i>
           </div>
-          <span style="font-size:13px;color:rgba(255,255,255,0.5)">Set budgets and never overspend</span>
+          <span style="font-size: 13px; color: rgba(255, 255, 255, 0.5)"
+            >Set budgets and never overspend</span
+          >
         </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:36px;height:36px;background:rgba(83,74,183,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i class="ti ti-check" style="color:#AFA9EC;font-size:16px"></i>
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div
+            style="
+              width: 36px;
+              height: 36px;
+              background: rgba(83, 74, 183, 0.2);
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+            "
+          >
+            <i class="ti ti-check" style="color: #afa9ec; font-size: 16px"></i>
           </div>
-          <span style="font-size:13px;color:rgba(255,255,255,0.5)">Beautiful analytics and monthly reports</span>
+          <span style="font-size: 13px; color: rgba(255, 255, 255, 0.5)"
+            >Beautiful analytics and monthly reports</span
+          >
         </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:36px;height:36px;background:rgba(83,74,183,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i class="ti ti-check" style="color:#AFA9EC;font-size:16px"></i>
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div
+            style="
+              width: 36px;
+              height: 36px;
+              background: rgba(83, 74, 183, 0.2);
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+            "
+          >
+            <i class="ti ti-check" style="color: #afa9ec; font-size: 16px"></i>
           </div>
-          <span style="font-size:13px;color:rgba(255,255,255,0.5)">Secured with JWT authentication</span>
+          <span style="font-size: 13px; color: rgba(255, 255, 255, 0.5)"
+            >Secured with JWT authentication</span
+          >
         </div>
       </div>
     </div>
 
-    <div style="display:flex;gap:10px">
-      <div style="flex:1;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px">
-        <i class="ti ti-trending-up" style="font-size:16px;color:#7F77DD;display:block;margin-bottom:8px"></i>
-        <div style="font-size:20px;font-weight:500;color:#fff">+24%</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:3px">avg. savings</div>
+    <div style="display: flex; gap: 10px">
+      <div
+        style="
+          flex: 1;
+          background: rgba(255, 255, 255, 0.04);
+          border: 0.5px solid rgba(255, 255, 255, 0.08);
+          border-radius: 10px;
+          padding: 14px;
+        "
+      >
+        <i
+          class="ti ti-trending-up"
+          style="
+            font-size: 16px;
+            color: #7f77dd;
+            display: block;
+            margin-bottom: 8px;
+          "
+        ></i>
+        <div style="font-size: 20px; font-weight: 500; color: #fff">+24%</div>
+        <div
+          style="
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 3px;
+          "
+        >
+          avg. savings
+        </div>
       </div>
-      <div style="flex:1;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px">
-        <i class="ti ti-shield-check" style="font-size:16px;color:#7F77DD;display:block;margin-bottom:8px"></i>
-        <div style="font-size:20px;font-weight:500;color:#fff">JWT</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:3px">secured</div>
+      <div
+        style="
+          flex: 1;
+          background: rgba(255, 255, 255, 0.04);
+          border: 0.5px solid rgba(255, 255, 255, 0.08);
+          border-radius: 10px;
+          padding: 14px;
+        "
+      >
+        <i
+          class="ti ti-shield-check"
+          style="
+            font-size: 16px;
+            color: #7f77dd;
+            display: block;
+            margin-bottom: 8px;
+          "
+        ></i>
+        <div style="font-size: 20px; font-weight: 500; color: #fff">JWT</div>
+        <div
+          style="
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 3px;
+          "
+        >
+          secured
+        </div>
       </div>
-      <div style="flex:1;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px">
-        <i class="ti ti-bolt" style="font-size:16px;color:#7F77DD;display:block;margin-bottom:8px"></i>
-        <div style="font-size:20px;font-weight:500;color:#fff">FREE</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:3px">forever</div>
+      <div
+        style="
+          flex: 1;
+          background: rgba(255, 255, 255, 0.04);
+          border: 0.5px solid rgba(255, 255, 255, 0.08);
+          border-radius: 10px;
+          padding: 14px;
+        "
+      >
+        <i
+          class="ti ti-bolt"
+          style="
+            font-size: 16px;
+            color: #7f77dd;
+            display: block;
+            margin-bottom: 8px;
+          "
+        ></i>
+        <div style="font-size: 20px; font-weight: 500; color: #fff">FREE</div>
+        <div
+          style="
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 3px;
+          "
+        >
+          forever
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Right — форма -->
-  <div style="width:420px;background:rgba(255,255,255,0.03);border-left:0.5px solid rgba(255,255,255,0.08);padding:3rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1">
-
-    <div style="margin-bottom:2rem">
-      <div style="font-size:24px;font-weight:500;color:#fff;letter-spacing:-0.02em">Create account ✨</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px">It only takes a few seconds</div>
+  <div
+    style="
+      width: 420px;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 0.5px solid rgba(255, 255, 255, 0.08);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    "
+  >
+    <div style="margin-bottom: 2rem">
+      <div
+        style="
+          font-size: 24px;
+          font-weight: 500;
+          color: #fff;
+          letter-spacing: -0.02em;
+        "
+      >
+        Create account ✨
+      </div>
+      <div
+        style="
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.4);
+          margin-top: 4px;
+        "
+      >
+        It only takes a few seconds
+      </div>
     </div>
 
-    <div style="margin-bottom:14px">
-      <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase">Username</label>
-      <input id="username" type="text" placeholder="johndoe"
-             style="width:100%;padding:11px 14px;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none"
-             onfocus="this.style.borderColor='#7F77DD';this.style.background='rgba(83,74,183,0.1)'"
-             onblur="this.style.borderColor='rgba(255,255,255,0.1)';this.style.background='rgba(255,255,255,0.06)'"/>
+    <div style="margin-bottom: 14px">
+      <label
+        style="
+          font-size: 11px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.5);
+          display: block;
+          margin-bottom: 6px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        "
+        >Username</label
+      >
+      <input
+        id="username"
+        type="text"
+        placeholder="johndoe"
+        style="
+          width: 100%;
+          padding: 11px 14px;
+          border: 0.5px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.06);
+          color: #fff;
+          font-size: 14px;
+          outline: none;
+        "
+        onfocus="
+          this.style.borderColor = '#7F77DD';
+          this.style.background = 'rgba(83,74,183,0.1)';
+        "
+        onblur="
+          this.style.borderColor = 'rgba(255,255,255,0.1)';
+          this.style.background = 'rgba(255,255,255,0.06)';
+        "
+      />
     </div>
 
-    <div style="margin-bottom:14px">
-      <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase">Email</label>
-      <input id="email" type="email" placeholder="your@email.com"
-             style="width:100%;padding:11px 14px;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none"
-             onfocus="this.style.borderColor='#7F77DD';this.style.background='rgba(83,74,183,0.1)'"
-             onblur="this.style.borderColor='rgba(255,255,255,0.1)';this.style.background='rgba(255,255,255,0.06)'"/>
+    <div style="margin-bottom: 14px">
+      <label
+        style="
+          font-size: 11px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.5);
+          display: block;
+          margin-bottom: 6px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        "
+        >Email</label
+      >
+      <input
+        id="email"
+        type="email"
+        placeholder="your@email.com"
+        style="
+          width: 100%;
+          padding: 11px 14px;
+          border: 0.5px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.06);
+          color: #fff;
+          font-size: 14px;
+          outline: none;
+        "
+        onfocus="
+          this.style.borderColor = '#7F77DD';
+          this.style.background = 'rgba(83,74,183,0.1)';
+        "
+        onblur="
+          this.style.borderColor = 'rgba(255,255,255,0.1)';
+          this.style.background = 'rgba(255,255,255,0.06)';
+        "
+      />
     </div>
 
-    <div style="margin-bottom:14px">
-      <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase">Password</label>
-      <input id="password" type="password" placeholder="min. 8 characters"
-             style="width:100%;padding:11px 14px;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none"
-             onfocus="this.style.borderColor='#7F77DD';this.style.background='rgba(83,74,183,0.1)'"
-             onblur="this.style.borderColor='rgba(255,255,255,0.1)';this.style.background='rgba(255,255,255,0.06)'"/>
+    <div style="margin-bottom: 14px">
+      <label
+        style="
+          font-size: 11px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.5);
+          display: block;
+          margin-bottom: 6px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        "
+        >Password</label
+      >
+      <input
+        id="password"
+        type="password"
+        placeholder="min. 8 characters"
+        style="
+          width: 100%;
+          padding: 11px 14px;
+          border: 0.5px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.06);
+          color: #fff;
+          font-size: 14px;
+          outline: none;
+        "
+        onfocus="
+          this.style.borderColor = '#7F77DD';
+          this.style.background = 'rgba(83,74,183,0.1)';
+        "
+        onblur="
+          this.style.borderColor = 'rgba(255,255,255,0.1)';
+          this.style.background = 'rgba(255,255,255,0.06)';
+        "
+      />
     </div>
 
-    <div style="margin-bottom:20px">
-      <label style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);display:block;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase">Confirm password</label>
-      <input id="password2" type="password" placeholder="••••••••"
-             style="width:100%;padding:11px 14px;border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none"
-             onfocus="this.style.borderColor='#7F77DD';this.style.background='rgba(83,74,183,0.1)'"
-             onblur="this.style.borderColor='rgba(255,255,255,0.1)';this.style.background='rgba(255,255,255,0.06)'"/>
+    <div style="margin-bottom: 20px">
+      <label
+        style="
+          font-size: 11px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.5);
+          display: block;
+          margin-bottom: 6px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        "
+        >Confirm password</label
+      >
+      <input
+        id="password2"
+        type="password"
+        placeholder="••••••••"
+        style="
+          width: 100%;
+          padding: 11px 14px;
+          border: 0.5px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.06);
+          color: #fff;
+          font-size: 14px;
+          outline: none;
+        "
+        onfocus="
+          this.style.borderColor = '#7F77DD';
+          this.style.background = 'rgba(83,74,183,0.1)';
+        "
+        onblur="
+          this.style.borderColor = 'rgba(255,255,255,0.1)';
+          this.style.background = 'rgba(255,255,255,0.06)';
+        "
+      />
     </div>
 
-    <div id="error" style="display:none;background:rgba(226,75,74,0.15);border:0.5px solid rgba(226,75,74,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#F09595;margin-bottom:14px"></div>
+    <div
+      id="error"
+      style="
+        display: none;
+        background: rgba(226, 75, 74, 0.15);
+        border: 0.5px solid rgba(226, 75, 74, 0.3);
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 13px;
+        color: #f09595;
+        margin-bottom: 14px;
+      "
+    ></div>
 
-    <button onclick="handleRegister()" id="register-btn"
-            style="width:100%;padding:12px;background:#534AB7;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"
-            onmouseover="this.style.background='#3C3489'"
-            onmouseout="this.style.background='#534AB7'">
+    <button
+      onclick="handleRegister()"
+      id="register-btn"
+      style="
+        width: 100%;
+        padding: 12px;
+        background: #534ab7;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      "
+      onmouseover="this.style.background = '#3C3489'"
+      onmouseout="this.style.background = '#534AB7'"
+    >
       <i class="ti ti-user-plus"></i>
       <span id="btn-text">Create account</span>
     </button>
 
-    <div style="text-align:center;margin-top:1.5rem;font-size:13px;color:rgba(255,255,255,0.3)">
+    <div style="display: flex; align-items: center; gap: 10px; margin: 18px 0">
+      <hr
+        style="
+          flex: 1;
+          border: none;
+          border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+        "
+      />
+      <span style="font-size: 12px; color: rgba(255, 255, 255, 0.25)">or</span>
+      <hr
+        style="
+          flex: 1;
+          border: none;
+          border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+        "
+      />
+    </div>
+
+    <a
+      href="/auth/login/google-oauth2/"
+      style="
+        width: 100%;
+        padding: 11px;
+        background: rgba(255, 255, 255, 0.04);
+        color: rgba(255, 255, 255, 0.7);
+        border: 0.5px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+      "
+      onmouseover="this.style.background = 'rgba(255,255,255,0.08)'"
+      onmouseout="this.style.background = 'rgba(255,255,255,0.04)'"
+    >
+      <i class="ti ti-brand-google" style="font-size: 16px"></i>
+      Continue with Google
+    </a>
+
+    <div
+      style="
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.3);
+      "
+    >
       Already have an account?
-      <a href="/login/" style="color:#7F77DD;font-weight:500">Sign in</a>
+      <a href="/login/" style="color: #7f77dd; font-weight: 500">Sign in</a>
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
+{% endblock %} {% block scripts %}
 <script>
-  if (localStorage.getItem('access_token')) window.location.href = '/'
+  if (localStorage.getItem("access_token")) window.location.href = "/";
 
   async function handleRegister() {
-    const username  = document.getElementById('username').value.trim()
-    const email     = document.getElementById('email').value.trim()
-    const password  = document.getElementById('password').value
-    const password2 = document.getElementById('password2').value
-    const errorEl   = document.getElementById('error')
-    const btnText   = document.getElementById('btn-text')
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const password2 = document.getElementById("password2").value;
+    const errorEl = document.getElementById("error");
+    const btnText = document.getElementById("btn-text");
 
     if (!username || !email || !password || !password2) {
-      errorEl.textContent = 'Please fill in all fields'
-      errorEl.style.display = 'block'
-      return
+      errorEl.textContent = "Please fill in all fields";
+      errorEl.style.display = "block";
+      return;
     }
     if (password !== password2) {
-      errorEl.textContent = 'Passwords do not match'
-      errorEl.style.display = 'block'
-      return
+      errorEl.textContent = "Passwords do not match";
+      errorEl.style.display = "block";
+      return;
     }
     if (password.length < 8) {
-      errorEl.textContent = 'Password must be at least 8 characters'
-      errorEl.style.display = 'block'
-      return
+      errorEl.textContent = "Password must be at least 8 characters";
+      errorEl.style.display = "block";
+      return;
     }
 
-    btnText.textContent = 'Creating account...'
-    errorEl.style.display = 'none'
+    btnText.textContent = "Creating account...";
+    errorEl.style.display = "none";
 
     try {
       const res = await fetch("/api/auth/register/", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password, password2 }),
-      })
-      const data = await res.json()
+      });
+      const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem('access_token', data.access)
-        localStorage.setItem('refresh_token', data.refresh)
-        window.location.href = '/'
+        localStorage.setItem("access_token", data.access);
+        localStorage.setItem("refresh_token", data.refresh);
+        window.location.href = "/";
       } else {
-        const msg = data.email?.[0] || data.username?.[0] || data.password?.[0] || 'Registration failed'
-        errorEl.textContent = msg
-        errorEl.style.display = 'block'
+        const msg =
+          data.email?.[0] ||
+          data.username?.[0] ||
+          data.password?.[0] ||
+          "Registration failed";
+        errorEl.textContent = msg;
+        errorEl.style.display = "block";
       }
     } catch {
-      errorEl.textContent = 'Connection error. Is the server running?'
-      errorEl.style.display = 'block'
+      errorEl.textContent = "Connection error. Is the server running?";
+      errorEl.style.display = "block";
     } finally {
-      btnText.textContent = 'Create account'
+      btnText.textContent = "Create account";
     }
   }
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') handleRegister()
-  })
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleRegister();
+  });
 </script>
 {% endblock %}
