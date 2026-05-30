@@ -6,52 +6,42 @@
 
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;">
   <div>
-    <h1 style="font-size:22px;font-weight:500;color:#fff;letter-spacing:-0.02em;">
+    <h1 id="dashboard-title" style="font-size:22px;font-weight:500;color:#fff;letter-spacing:-0.02em;">
       Dashboard
     </h1>
     <p id="greeting" style="font-size:13px;color:rgba(255,255,255,0.35);margin-top:3px"></p>
   </div>
 
-  <div style="position:relative;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:6px 14px;cursor:pointer"
-     onclick="document.getElementById('month-input').showPicker()">
-  <i class="ti ti-calendar" style="font-size:14px;color:rgba(255,255,255,0.5);pointer-events:none"></i>
-  <span id="month-label" style="font-size:13px;color:rgba(255,255,255,0.7);pointer-events:none"></span>
-  <i class="ti ti-chevron-down" style="font-size:12px;color:rgba(255,255,255,0.3);pointer-events:none"></i>
-  <input id="month-input" type="month"
-         style="position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;top:0;left:0"
-         onchange="currentYear=new Date(this.value+'-01').getFullYear();currentMonth=new Date(this.value+'-01').getMonth()+1;document.getElementById('month-label').textContent=getMonthLabel();loadDashboard()"/>
+  <div style="position:relative;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:6px 14px;cursor:pointer">
+    <i class="ti ti-calendar" style="font-size:14px;color:rgba(255,255,255,0.5);pointer-events:none"></i>
+    <span id="month-label" style="font-size:13px;color:rgba(255,255,255,0.7);pointer-events:none"></span>
+    <i class="ti ti-chevron-down" style="font-size:12px;color:rgba(255,255,255,0.3);pointer-events:none"></i>
+    <input id="month-input" type="month" style="position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;top:0;left:0" onchange="handleMonthChange(this.value)" />
+  </div>
 </div>
 
 <!-- Stat cards -->
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem;">
   <div style="background:rgba(83,74,183,0.15);border:0.5px solid rgba(127,119,221,0.3);border-radius:10px;padding:1rem;">
-    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px;display:flex;align-items:center;gap:5px;">
-      <i class="ti ti-wallet" style="font-size:13px"></i> Total balance
-    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px;display:flex;align-items:center;gap:5px;"><i class="ti ti-wallet" style="font-size:13px"></i> Total balance</div>
     <div id="stat-balance" style="font-size:22px;font-weight:500;color:#fff;letter-spacing:-0.02em;">—</div>
     <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px">all time</div>
   </div>
 
   <div style="background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem;">
-    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px;display:flex;align-items:center;gap:5px;">
-      <i class="ti ti-arrow-down-circle" style="font-size:13px"></i> Income
-    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px;display:flex;align-items:center;gap:5px;"><i class="ti ti-arrow-down-circle" style="font-size:13px"></i> Income</div>
     <div id="stat-income" style="font-size:22px;font-weight:500;color:#5DCAA5;letter-spacing:-0.02em;">—</div>
     <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px">this month</div>
   </div>
 
   <div style="background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem;">
-    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px;display:flex;align-items:center;gap:5px;">
-      <i class="ti ti-arrow-up-circle" style="font-size:13px"></i> Expenses
-    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px;display:flex;align-items:center;gap:5px;"><i class="ti ti-arrow-up-circle" style="font-size:13px"></i> Expenses</div>
     <div id="stat-expense" style="font-size:22px;font-weight:500;color:#F09595;letter-spacing:-0.02em;">—</div>
     <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px">this month</div>
   </div>
 
   <div style="background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem;">
-    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px;display:flex;align-items:center;gap:5px;">
-      <i class="ti ti-pig-money" style="font-size:13px"></i> Saved
-    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px;display:flex;align-items:center;gap:5px;"><i class="ti ti-pig-money" style="font-size:13px"></i> Saved</div>
     <div id="stat-saved" style="font-size:22px;font-weight:500;color:#fff;letter-spacing:-0.02em;">—</div>
     <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px">this month</div>
   </div>
@@ -64,18 +54,10 @@
       <span style="font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);">Monthly overview</span>
       <span style="font-size:11px;color:rgba(255,255,255,0.3)">last 6 months</span>
     </div>
-
     <div style="display:flex;gap:12px;margin-bottom:12px">
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.4);">
-        <div style="width:8px;height:8px;background:#534AB7;border-radius:2px;"></div>
-        Income
-      </div>
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.4);">
-        <div style="width:8px;height:8px;background:rgba(240,149,149,0.7);border-radius:2px;"></div>
-        Expenses
-      </div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;background:#534AB7;border-radius:2px;"></div>Income</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;background:rgba(240,149,149,0.7);border-radius:2px;"></div>Expenses</div>
     </div>
-
     <canvas id="trendChart" height="130"></canvas>
   </div>
 
@@ -84,12 +66,7 @@
       <span style="font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);">Budgets</span>
       <a href="/budgets/" style="font-size:11px;color:rgba(255,255,255,0.3)">view all →</a>
     </div>
-
-    <div id="budgets-list">
-      <div style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;padding:2rem 0">
-        Loading...
-      </div>
-    </div>
+    <div id="budgets-list"><div style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;padding:2rem 0">Loading...</div></div>
   </div>
 </div>
 
@@ -99,12 +76,7 @@
     <span style="font-size:13px;font-weight:500;color:rgba(255,255,255,0.7)">Recent transactions</span>
     <a href="/transactions/" style="font-size:11px;color:rgba(255,255,255,0.3)">view all →</a>
   </div>
-
-  <div id="transactions-list">
-    <div style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;padding:2rem 0">
-      Loading...
-    </div>
-  </div>
+  <div id="transactions-list"><div style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;padding:2rem 0">Loading...</div></div>
 </div>
 
 {% endblock %}
@@ -127,39 +99,71 @@
     return input.value || getDefaultMonthStr();
   }
 
-  async function setGreeting() {
-  const h = new Date().getHours()
-  const greet = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'
-  try {
-    const res = await apiFetch('/api/auth/me/')
-    if (res) {
-      const data = await res.json()
-      const name = data.username || data.email.split('@')[0]
-      document.getElementById('greeting').textContent = `${greet}, ${name} 👋`
-    }
-  } catch {
-    document.getElementById('greeting').textContent = `${greet} 👋`
+  function getMonthLabel() {
+    return new Date(currentYear, currentMonth - 1).toLocaleDateString("en-US", {
+      month: "long",
+      year: "numeric",
+    });
   }
-}
 
- async function loadDashboard() {
-  document.getElementById('month-label').textContent = getMonthLabel()
-  document.getElementById('month-input').value = getMonthStr()
-  setGreeting()
+  function handleMonthChange(value) {
+    if (!value) return;
 
-  await Promise.all([
-    loadBalance(),
-    loadSummary(),
-    loadTrend(),
-    loadBudgets(),
-    loadTransactions(),
-  ])
-}
+    const [year, month] = value.split("-");
+    currentYear = Number(year);
+    currentMonth = Number(month);
+
+    document.getElementById("month-label").textContent = getMonthLabel();
+    loadDashboard();
+  }
+
+  async function setGreeting() {
+    const h = new Date().getHours();
+    const greet = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+
+    try {
+      const res = await apiFetch("/api/auth/me/");
+
+      if (!res || !res.ok) {
+        document.getElementById("dashboard-title").textContent = "Dashboard";
+        document.getElementById("greeting").textContent = `${greet} 👋`;
+        return;
+      }
+
+      const data = await res.json();
+      const name = data.username || data.email?.split("@")[0] || "there";
+
+      document.getElementById("dashboard-title").textContent = `Hi, ${name} 👋`;
+      document.getElementById("greeting").textContent = "Here is your financial overview";
+    } catch {
+      document.getElementById("dashboard-title").textContent = "Dashboard";
+      document.getElementById("greeting").textContent = `${greet} 👋`;
+    }
+  }
+
+  async function loadDashboard() {
+    const monthInput = document.getElementById("month-input");
+
+    if (!monthInput.value) {
+      monthInput.value = getDefaultMonthStr();
+    }
+
+    document.getElementById("month-label").textContent = getMonthLabel();
+
+    await setGreeting();
+
+    await Promise.all([
+      loadBalance(),
+      loadSummary(),
+      loadTrend(),
+      loadBudgets(),
+      loadTransactions(),
+    ]);
+  }
 
   async function loadBalance() {
     const res = await apiFetch("/api/analytics/balance/");
     if (!res) return;
-
     const data = await res.json();
     document.getElementById("stat-balance").textContent = formatMoney(data.balance);
   }
@@ -167,12 +171,9 @@
   async function loadSummary() {
     const res = await apiFetch(`/api/analytics/summary/?month=${getMonthStr()}`);
     if (!res) return;
-
     const data = await res.json();
-
     document.getElementById("stat-income").textContent = formatMoney(data.total_income);
     document.getElementById("stat-expense").textContent = formatMoney(data.total_expense);
-
     const saved = (data.total_income || 0) - (data.total_expense || 0);
     document.getElementById("stat-saved").textContent = formatMoney(saved);
   }
@@ -180,13 +181,8 @@
   async function loadTrend() {
     const res = await apiFetch("/api/analytics/monthly-trend/?months=6");
     if (!res) return;
-
     const data = await res.json();
-
-    const labels = data.map((d) =>
-      new Date(d.month + "-01").toLocaleDateString("en-US", { month: "short" })
-    );
-
+    const labels = data.map((d) => new Date(d.month + "-01").toLocaleDateString("en-US", { month: "short" }));
     const incomes = data.map((d) => d.income || 0);
     const expenses = data.map((d) => d.expense || 0);
 
@@ -199,32 +195,16 @@
       data: {
         labels,
         datasets: [
-          {
-            label: "Income",
-            data: incomes,
-            backgroundColor: "#534AB7",
-            borderRadius: 4,
-          },
-          {
-            label: "Expenses",
-            data: expenses,
-            backgroundColor: "rgba(240,149,149,0.7)",
-            borderRadius: 4,
-          },
+          { label: "Income", data: incomes, backgroundColor: "#534AB7", borderRadius: 4 },
+          { label: "Expenses", data: expenses, backgroundColor: "rgba(240,149,149,0.7)", borderRadius: 4 },
         ],
       },
       options: {
         responsive: true,
         plugins: { legend: { display: false } },
         scales: {
-          x: {
-            ticks: { color: "rgba(255,255,255,0.3)", font: { size: 11 } },
-            grid: { display: false },
-          },
-          y: {
-            ticks: { color: "rgba(255,255,255,0.3)", font: { size: 11 } },
-            grid: { color: "rgba(255,255,255,0.05)" },
-          },
+          x: { ticks: { color: "rgba(255,255,255,0.3)", font: { size: 11 } }, grid: { display: false } },
+          y: { ticks: { color: "rgba(255,255,255,0.3)", font: { size: 11 } }, grid: { color: "rgba(255,255,255,0.05)" } },
         },
       },
     });
@@ -233,7 +213,6 @@
   async function loadBudgets() {
     const res = await apiFetch(`/api/budgets/?month=${getMonthStr()}`);
     if (!res) return;
-
     const raw = await res.json();
     const data = Array.isArray(raw) ? raw : raw.results || [];
     const el = document.getElementById("budgets-list");
@@ -243,41 +222,33 @@
       return;
     }
 
-    el.innerHTML = data
-      .slice(0, 4)
-      .map((b) => {
-        const pct = Math.min(b.percent_used, 100);
-        const color = pct >= 90 ? "#E24B4A" : pct >= 70 ? "#F5A623" : "#534AB7";
+    el.innerHTML = data.slice(0, 4).map((b) => {
+      const pct = Math.min(b.percent_used, 100);
+      const color = pct >= 90 ? "#E24B4A" : pct >= 70 ? "#F5A623" : "#534AB7";
+      const note = pct >= 90
+        ? `<span style="color:#F09595">Almost over!</span>`
+        : pct >= 70
+          ? `<span style="color:#F5C775">Watch out</span>`
+          : `<span style="color:#5DCAA5">On track</span>`;
 
-        const note =
-          pct >= 90
-            ? `<span style="color:#F09595">Almost over!</span>`
-            : pct >= 70
-              ? `<span style="color:#F5C775">Watch out</span>`
-              : `<span style="color:#5DCAA5">On track</span>`;
-
-        return `
-          <div style="margin-bottom:14px">
-            <div style="display:flex;justify-content:space-between;margin-bottom:5px">
-              <span style="font-size:12px;color:rgba(255,255,255,0.6)">${b.category_detail?.name || "Uncategorized"}</span>
-              <span style="font-size:11px;color:rgba(255,255,255,0.35)">${formatMoney(b.spent)} / ${formatMoney(b.limit_amount)}</span>
-            </div>
-            <div class="progress-bg">
-              <div class="progress-fill" style="width:${pct}%;background:${color}"></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;margin-top:3px">
-              <div style="font-size:10px;color:rgba(255,255,255,0.25)">${b.percent_used}% used</div>
-              <div style="font-size:10px">${note}</div>
-            </div>
-          </div>`;
-      })
-      .join("");
+      return `
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+            <span style="font-size:12px;color:rgba(255,255,255,0.6)">${b.category_detail?.name || "Uncategorized"}</span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.35)">${formatMoney(b.spent)} / ${formatMoney(b.limit_amount)}</span>
+          </div>
+          <div class="progress-bg"><div class="progress-fill" style="width:${pct}%;background:${color}"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:3px">
+            <div style="font-size:10px;color:rgba(255,255,255,0.25)">${b.percent_used}% used</div>
+            <div style="font-size:10px">${note}</div>
+          </div>
+        </div>`;
+    }).join("");
   }
 
   async function loadTransactions() {
     const res = await apiFetch("/api/transactions/?ordering=-date&page_size=5");
     if (!res) return;
-
     const data = await res.json();
     const el = document.getElementById("transactions-list");
     const items = data.results || [];
@@ -287,26 +258,23 @@
       return;
     }
 
-    el.innerHTML = items
-      .map((tx) => {
-        const isIncome = tx.type === "income";
-        const color = tx.category_detail?.color || "#534AB7";
-        const icon = tx.category_detail?.icon || "💸";
-
-        return `
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.05)">
-            <div style="width:34px;height:34px;border-radius:8px;background:${color}22;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">${icon}</div>
-            <div style="flex:1;min-width:0">
-              <div style="font-size:13px;color:rgba(255,255,255,0.75);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${tx.note || tx.category_detail?.name || "Transaction"}</div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:1px">${tx.category_detail?.name || ""}</div>
-            </div>
-            <div style="text-align:right;flex-shrink:0">
-              <div style="font-size:13px;font-weight:500;color:${isIncome ? "#5DCAA5" : "#F09595"}">${isIncome ? "+" : "-"}${formatMoney(tx.amount)}</div>
-              <div style="font-size:10px;color:rgba(255,255,255,0.25);margin-top:2px">${formatDate(tx.date)}</div>
-            </div>
-          </div>`;
-      })
-      .join("");
+    el.innerHTML = items.map((tx) => {
+      const isIncome = tx.type === "income";
+      const color = tx.category_detail?.color || "#534AB7";
+      const icon = tx.category_detail?.icon || "💸";
+      return `
+        <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.05)">
+          <div style="width:34px;height:34px;border-radius:8px;background:${color}22;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">${icon}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;color:rgba(255,255,255,0.75);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${tx.note || tx.category_detail?.name || "Transaction"}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:1px">${tx.category_detail?.name || ""}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-size:13px;font-weight:500;color:${isIncome ? "#5DCAA5" : "#F09595"}">${isIncome ? "+" : "-"}${formatMoney(tx.amount)}</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.25);margin-top:2px">${formatDate(tx.date)}</div>
+          </div>
+        </div>`;
+    }).join("");
   }
 
   loadDashboard();
