@@ -588,7 +588,9 @@ endblock %} {% block main_layout %}{% endblock %} {% block auth_page %}
     </div>
   </div>
 </div>
-{% endblock %} {% block scripts %}
+{% endblock %} 
+
+{% block scripts %}
 <script>
   if (localStorage.getItem("access_token")) window.location.href = "/";
 
