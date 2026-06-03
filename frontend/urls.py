@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     LoginView, RegisterView, DashboardView,
-    TransactionsView, CategoriesView, AnalyticsView, BudgetsView
+    TransactionsView, CategoriesView, AnalyticsView, BudgetsView, ForgotPasswordPageView, ResetPasswordPageView
 )
 
 urlpatterns = [
@@ -12,4 +12,6 @@ urlpatterns = [
     path('categories/', CategoriesView.as_view(), name='categories'),
     path('analytics/', AnalyticsView.as_view(), name='analytics'),
     path('budgets/', BudgetsView.as_view(), name='budgets'),
+    path('forgot-password/', ForgotPasswordPageView.as_view(), name='forgot_password_page'),
+    path('reset-password/', ResetPasswordPageView.as_view(), name='reset_password_page'),
 ]

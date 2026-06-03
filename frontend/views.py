@@ -34,3 +34,11 @@ class AnalyticsView(View):
 class BudgetsView(View):
     def get(self, request):
         return render(request, 'frontend/budgets.html')
+    
+ class ForgotPasswordPageView(View):
+    def get(self, request):
+        return render(request, 'frontend/forgot_password.html')
+
+class ResetPasswordPageView(View):
+    def get(self, request):
+        return render(request, 'frontend/reset_password.html')
