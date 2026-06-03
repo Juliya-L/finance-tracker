@@ -35,7 +35,7 @@ class BudgetsView(View):
     def get(self, request):
         return render(request, 'frontend/budgets.html')
     
- class ForgotPasswordPageView(View):
+class ForgotPasswordPageView(View):
     def get(self, request):
         return render(request, 'frontend/forgot_password.html')
 
