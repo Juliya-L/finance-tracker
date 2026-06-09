@@ -3,28 +3,72 @@
 REST API for personal finance management built with Django REST Framework.
 
 ---
+## 🌐 Live Demo
 
+Application:
+
+https://finance-tracker-ev27.onrender.com
+
+API Documentation:
+
+https://finance-tracker-ev27.onrender.com/api/docs/
+
+---
 ## 🚀 Features
 
-- JWT authentication (register, login, logout)
-- Income and expense categories management
-- Transactions CRUD with filtering by date, category, and type
-- Monthly analytics — balance, summaries, and trends
-- Budgets by category with spending progress tracking
-- Automatic Swagger/OpenAPI documentation
-- Pytest API testing
-
+- User registration and login
+- JWT authentication
+- Google OAuth authentication
+- Password reset via email
+- User profile management
+- Income and expense categories
+- Transactions CRUD
+- Filtering transactions by:
+  - category
+  - type
+  - date range
+  - month
+  - year
+- Monthly analytics and reports
+- Budget tracking with progress calculation
+- PostgreSQL database
+- Swagger/OpenAPI documentation
+- Automated API tests with pytest
+- Responsive web interface
 ---
 
 ## 🛠 Tech Stack
 
+### Backend
 - Python 3.12
-- Django 6 + Django REST Framework
-- JWT Authentication (`djangorestframework-simplejwt`)
-- PostgreSQL (SQLite for development)
-- pytest + pytest-django
-- drf-spectacular (Swagger UI)
+- Django 6
+- Django REST Framework
 
+### Authentication
+- JWT (SimpleJWT)
+- Google OAuth2
+
+### Database
+- PostgreSQL
+- SQLite (local development)
+
+### Testing
+- pytest
+- pytest-django
+
+### Documentation
+- drf-spectacular
+- Swagger UI
+
+### Deployment
+- Render
+- Gunicorn
+- WhiteNoise
+
+### Frontend
+- HTML
+- CSS
+- JavaScript
 ---
 
 ## ⚙️ Local Setup
@@ -137,27 +181,44 @@ pytest categories/tests.py -v
 
 ---
 
-## 🔐 Authentication
+## 🔑 Authentication
 
-This API uses JWT authentication.
+Supported authentication methods:
 
-Example header:
+- Email + Password
+- Google OAuth2
+- JWT Access/Refresh Tokens
+
+Example:
 
 ```http
 Authorization: Bearer your_access_token
-```
+
+
 
 ---
+
+## 📧 Password Recovery
+
+Users can reset forgotten passwords via email.
+
+Flow:
+
+1. Enter email address
+2. Receive reset link
+3. Set new password
+4. Login with the new password
 
 ## 📂 Project Structure
 
 ```txt
-accounts/       # Authentication & users
-categories/     # Expense/income categories
-transactions/   # Financial transactions
-analytics/      # Reports and statistics
-budgets/        # Budget tracking
-config/         # Django settings
+users/          # Authentication & users
+categories/     # Categories
+transactions/   # Transactions
+analytics/      # Analytics
+budgets/        # Budgets
+frontend/       # Templates & UI
+config/         # Settings
 ```
 
 ---
@@ -182,6 +243,22 @@ Example tested scenarios:
 
 ---
 
+
+## ☁️ Deployment
+
+Production deployment:
+
+- Render Web Service
+- Render PostgreSQL Database
+- Gunicorn
+- WhiteNoise
+
+Live URL:
+
+https://finance-tracker-ev27.onrender.com
+
+---
+
 ## 👩‍💻 Author
 
-Backend pet project built for learning Django REST Framework, API architecture, authentication, testing, and financial analytics systems.
+Personal portfolio project built with Django, PostgreSQL, JavaScript, authentication systems, analytics, and deployment tools.
