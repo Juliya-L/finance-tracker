@@ -193,10 +193,7 @@ Example:
 
 ```http
 Authorization: Bearer your_access_token
-
-
-
----
+```
 
 ## 📧 Password Recovery
 
