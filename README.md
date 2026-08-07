@@ -7,11 +7,8 @@ REST API for personal finance management built with Django REST Framework.
 
 Application:
 
-https://finance-tracker-ev27.onrender.com
+web-production-bc986.up.railway.app
 
-API Documentation:
-
-https://finance-tracker-ev27.onrender.com/api/docs/
 
 ---
 ## 🚀 Features
@@ -61,7 +58,7 @@ https://finance-tracker-ev27.onrender.com/api/docs/
 - Swagger UI
 
 ### Deployment
-- Render
+- Railway
 - Gunicorn
 - WhiteNoise
 
