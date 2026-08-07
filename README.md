@@ -4,10 +4,7 @@ REST API for personal finance management built with Django REST Framework.
 
 ---
 ## 🌐 Live Demo
-
-Application:
-
-web-production-bc986.up.railway.app
+(https://web-production-bc986.up.railway.app)
 
 
 ---
